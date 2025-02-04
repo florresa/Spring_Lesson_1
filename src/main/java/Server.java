@@ -75,7 +75,8 @@ public class Server {
 
             // формируем Request
             Request request = new Request(parts[0], parts[1], headers, stream);
-            var handler = handlers.get(request.getMethod() + request.getPath());
+            var path = request.getPath().contains("?") ? request.getPath().substring(0, request.getPath().indexOf("?")) : request.getPath();
+            var handler = handlers.get(request.getMethod() + path);
 
             if (handler == null) {
                 out.write((
